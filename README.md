@@ -6,7 +6,7 @@ Software Engineer & Cybersecurity Enthusiast focused on building secure, modern
 
 ## 🌐 Live Portfolio
 
-🔗 https://yonan-md.github.io/portfolio/
+🔗 https://yonan-md.github.io/Portfolio/
 
 ---
 
