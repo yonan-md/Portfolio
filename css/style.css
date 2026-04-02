@@ -780,9 +780,21 @@
 
         .portfolio-card-content h3 {
             font-size: 0.92rem;
-            font-weight: 700;
+            font-weight: 500;
             color: #1a1a2e;
             line-height: 1.4;
+        }
+
+        .portfolio-card-content .see-more {
+            color: #0d24be;         /* Bootstrap-like blue */
+            font-weight: bold;       /* Bold text */
+            text-decoration: none;   /* Remove underline */
+            transition: color 0.3s; /* Smooth hover effect */
+        }
+
+        .portfolio-card-content .see-more:hover {
+             color: #b30000;          /* Darker blue on hover */
+             text-decoration: underline;
         }
 
         /* ===== CONTACT SECTION ===== */

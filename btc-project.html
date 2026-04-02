@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BTC Live Monitor Bot</title>
+  <style>
+    /* Reset some defaults */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body { 
+      font-family: Arial, Helvetica, sans-serif; 
+      background-color: #f9f9f9; 
+      color: #333; 
+      line-height: 1.6;
+      padding: 20px; 
+    }
+
+    a { color: #4d0202; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    h1 { color: #23058d; margin-bottom: 15px; }
+    h2 { color: #444; margin-top: 25px; margin-bottom: 10px; }
+
+    p { margin-bottom: 15px; }
+    ul { margin-left: 20px; margin-bottom: 15px; }
+
+    .images { 
+      display: flex; 
+      flex-wrap: wrap; 
+      gap: 15px; 
+      margin-bottom: 20px;
+    }
+
+    .images img { 
+      max-width: 100%; 
+      width: 300px; 
+      border: 1px solid #ccc; 
+      border-radius: 8px; 
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1); 
+    }
+
+    .links { margin-top: 20px; }
+    .links a { font-weight: bold; }
+  </style>
+</head>
+<body>
+
+  <h1>BTC Live Monitor Bot</h1>
+
+  <p>
+    This project monitors live BTC prices using Python and Binance API. It sends Telegram alerts when price crosses thresholds, detects big moves, and logs all price data. A dashboard chart visualizes price trends over time.
+  </p>
+
+  <h2>Features</h2>
+  <ul>
+    <li>Real-time BTC price tracking</li>
+    <li>Low & High threshold alerts</li>
+    <li>Big price movement detection</li>
+    <li>Hourly volatility monitoring</li>
+    <li>CSV logging and chart visualization</li>
+  </ul>
+
+  <h2>Telegram Alerts</h2>
+  <div class="images">
+    <img src="assets/images/Screenshot 2026-04-02 220058.png" alt="Low Threshold Alert">
+    <img src="assets/images/Screenshot 2026-04-02 220120.png" alt="High Threshold Alert">
+    <img src="assets/images/Screenshot 2026-04-02 151703.png" alt="Big Move Alert">
+  </div>
+
+  <h2>Dashboard Chart</h2>
+  <div class="images">
+    <img src="assets/images/btc_chart.png" alt="BTC Price Chart">
+  </div>
+
+  <div class="links">
+    <p>
+      <a href="https://github.com/Yonan-md/live-monitor" target="_blank">View on GitHub</a>
+    </p>
+    <p>
+      <a href="index.html">&larr; Back to Portfolio</a>
+    </p>
+  </div>
+
+</body>
+</html>
