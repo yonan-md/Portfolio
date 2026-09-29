@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="ACADEMIC EVALUATION SYSTEM — portfolio project showcase." />
+    <title>ACADEMIC EVALUATION SYSTEM — Project Showcase</title>
+    <style>
+        :root {
+            --bg: #0a0d12;
+            --panel: #11161d;
+            --panel-2: #151b23;
+            --text: #f5f7fa;
+            --muted: #a7b0bc;
+            --line: rgba(255, 255, 255, .09);
+            --accent: #72a7ff;
+            --accent-2: #9a7bff;
+            --success: #62d59a;
+            --shadow: 0 24px 70px rgba(0, 0, 0, .35);
+            --radius: 24px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+                "Segoe UI", sans-serif;
+            background:
+                radial-gradient(circle at 15% 0%, rgba(114, 167, 255, .10), transparent 32%),
+                radial-gradient(circle at 90% 12%, rgba(154, 123, 255, .09), transparent 30%),
+                var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .container {
+            width: min(1160px, calc(100% - 40px));
+            margin: 0 auto;
+        }
+
+        .hero {
+            padding: 88px 0 64px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, .03);
+            border-radius: 999px;
+            color: #dce5f2;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--success);
+            box-shadow: 0 0 18px rgba(98, 213, 154, .65);
+        }
+
+        h1 {
+            margin: 22px 0 14px;
+            font-size: clamp(44px, 8vw, 78px);
+            line-height: .98;
+            letter-spacing: -.045em;
+            max-width: 980px;
+        }
+
+        .hero-copy {
+            max-width: 760px;
+            color: var(--muted);
+            font-size: 19px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 13px 18px;
+            border-radius: 14px;
+            font-weight: 750;
+            border: 1px solid var(--line);
+            transition: transform .18s ease, background .18s ease, border-color .18s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, .18);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            color: #08111f;
+            border-color: transparent;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, .03);
+        }
+
+        section {
+            padding: 28px 0 72px;
+        }
+
+        .section-title {
+            font-size: 15px;
+            font-weight: 800;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: #c3ccd8;
+            margin-bottom: 18px;
+        }
+
+        .showroom {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 16px;
+        }
+
+        .shot {
+            position: relative;
+            min-height: 230px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            overflow: hidden;
+            background:
+                linear-gradient(160deg, rgba(255, 255, 255, .05), rgba(255, 255, 255, .015)),
+                var(--panel);
+            box-shadow: var(--shadow);
+        }
+
+        .shot.large {
+            grid-column: span 7;
+            min-height: 420px;
+        }
+
+        .shot.medium {
+            grid-column: span 5;
+            min-height: 420px;
+        }
+
+        .shot.small {
+            grid-column: span 4;
+            min-height: 250px;
+        }
+
+        .shot img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+        }
+
+        .shot-placeholder {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            padding: 30px;
+            text-align: center;
+            color: #b8c0cc;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(114, 167, 255, .15), transparent 30%),
+                radial-gradient(circle at 80% 70%, rgba(154, 123, 255, .15), transparent 28%),
+                #10151c;
+        }
+
+        .shot-placeholder strong {
+            display: block;
+            margin-bottom: 6px;
+            color: #eef3fb;
+            font-size: 18px;
+        }
+
+        .shot-caption {
+            position: absolute;
+            left: 16px;
+            right: 16px;
+            bottom: 16px;
+            padding: 11px 13px;
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 14px;
+            background: rgba(7, 10, 14, .72);
+            backdrop-filter: blur(10px);
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1.3fr .7fr;
+            gap: 18px;
+            align-items: start;
+        }
+
+        .card {
+            border: 1px solid var(--line);
+            background: linear-gradient(180deg, rgba(255, 255, 255, .04), rgba(255, 255, 255, .02));
+            border-radius: var(--radius);
+            padding: 28px;
+        }
+
+        .card h2 {
+            margin: 0 0 12px;
+            font-size: 28px;
+            letter-spacing: -.025em;
+        }
+
+        .card p {
+            margin: 0;
+            color: var(--muted);
+        }
+
+        .feature-list {
+            display: grid;
+            gap: 12px;
+            margin-top: 22px;
+        }
+
+        .feature {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .feature-dot {
+            flex: 0 0 auto;
+            width: 10px;
+            height: 10px;
+            margin-top: 8px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        }
+
+        .feature strong {
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .feature span {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+            margin-top: 18px;
+        }
+
+        .tag {
+            padding: 8px 11px;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, .03);
+            border-radius: 999px;
+            color: #d7dee8;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .cta {
+            padding: 26px;
+            border-radius: var(--radius);
+            border: 1px solid var(--line);
+            background:
+                linear-gradient(135deg, rgba(114, 167, 255, .12), rgba(154, 123, 255, .10)),
+                var(--panel);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .cta h2 {
+            margin: 0 0 6px;
+            font-size: 28px;
+        }
+
+        .cta p {
+            margin: 0;
+            color: var(--muted);
+            max-width: 700px;
+        }
+
+        footer {
+            padding: 0 0 42px;
+            color: #87919e;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        @media (max-width: 860px) {
+
+            .shot.large,
+            .shot.medium,
+            .shot.small {
+                grid-column: span 12;
+                min-height: 320px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .container {
+                width: min(100% - 24px, 1160px);
+            }
+
+            .hero {
+                padding-top: 54px;
+            }
+
+            .hero-copy {
+                font-size: 17px;
+            }
+
+            .card,
+            .cta {
+                padding: 22px;
+            }
+
+            .shot.large,
+            .shot.medium,
+            .shot.small {
+                min-height: 240px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="hero">
+        <div class="container">
+            <span class="eyebrow">Portfolio Project • In Active Development</span>
+
+            <h1>ACADEMIC<br />EVALUATION SYSTEM</h1>
+
+            <p class="hero-copy">
+                A secure, role-based academic platform for managing courses, instructor assignments,
+                student enrollment, and the evaluation workflow — built with a security-first
+                architecture and database-level access control.
+            </p>
+
+            <div class="hero-actions">
+                <a class="btn btn-primary" href="#showroom">View Showroom</a>
+                <a class="btn btn-secondary" href="https://github.com/yonan-md/academic-evaluation-system"
+                    target="_blank" rel="noreferrer">
+                    View GitHub Repository
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- SHOWROOM FIRST -->
+        <section id="showroom">
+            <div class="container">
+                <div class="section-title">Project Showroom</div>
+
+                <div class="showroom">
+
+                    <!-- Replace these placeholders with your actual screenshots.
+               Example:
+               <img src="images/login.png" alt="Academic Evaluation System login page">
+          -->
+
+                    <figure class="shot large">
+                        <div class="shot-placeholder">
+                            <div>
+                                <strong>Dashboard / Main Experience</strong>
+                                Replace this placeholder with your main application screenshot.
+                            </div>
+                        </div>
+                        <figcaption class="shot-caption">Main application experience</figcaption>
+                    </figure>
+
+                    <figure class="shot medium">
+                        <div class="shot-placeholder">
+                            <div>
+                                <strong>Course Management</strong>
+                                Add a screenshot of the admin course management interface.
+                            </div>
+                        </div>
+                        <figcaption class="shot-caption">Course management</figcaption>
+                    </figure>
+
+                    <figure class="shot small">
+                        <div class="shot-placeholder">
+                            <div>
+                                <strong>Instructor Assignments</strong>
+                                Add an instructor/course assignment screenshot.
+                            </div>
+                        </div>
+                        <figcaption class="shot-caption">Instructor assignment</figcaption>
+                    </figure>
+
+                    <figure class="shot small">
+                        <div class="shot-placeholder">
+                            <div>
+                                <strong>Student Enrollment</strong>
+                                Add the enrollment management screenshot.
+                            </div>
+                        </div>
+                        <figcaption class="shot-caption">Student enrollment</figcaption>
+                    </figure>
+
+                    <figure class="shot small">
+                        <div class="shot-placeholder">
+                            <div>
+                                <strong>Authentication</strong>
+                                Add your login or signup screenshot.
+                            </div>
+                        </div>
+                        <figcaption class="shot-caption">Authentication</figcaption>
+                    </figure>
+
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <div class="info-grid">
+
+                    <article class="card">
+                        <h2>About the project</h2>
+
+                        <p>
+                            ACADEMIC EVALUATION SYSTEM is a full-stack academic management project
+                            focused on secure role separation and controlled access to academic data.
+                            The current implementation includes authentication, role-based dashboards,
+                            course management, instructor-course assignments, and student enrollment.
+                            Quiz authoring and the secure examination workflow are planned next.
+                        </p>
+
+                        <div class="feature-list">
+                            <div class="feature">
+                                <span class="feature-dot"></span>
+                                <div>
+                                    <strong>Role-based architecture</strong>
+                                    <span>Separate admin, instructor, and student experiences with protected
+                                        routes.</span>
+                                </div>
+                            </div>
+
+                            <div class="feature">
+                                <span class="feature-dot"></span>
+                                <div>
+                                    <strong>Database-level authorization</strong>
+                                    <span>Supabase Row Level Security is used as the core access-control
+                                        boundary.</span>
+                                </div>
+                            </div>
+
+                            <div class="feature">
+                                <span class="feature-dot"></span>
+                                <div>
+                                    <strong>Structured application architecture</strong>
+                                    <span>React UI → TanStack Query → typed services → Supabase/RLS.</span>
+                                </div>
+                            </div>
+
+                            <div class="feature">
+                                <span class="feature-dot"></span>
+                                <div>
+                                    <strong>Security-first exam roadmap</strong>
+                                    <span>Future exam delivery is designed around server-authoritative attempts, timers,
+                                        and grading.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stack">
+                            <span class="tag">React</span>
+                            <span class="tag">TypeScript</span>
+                            <span class="tag">Vite</span>
+                            <span class="tag">Tailwind CSS</span>
+                            <span class="tag">TanStack Query</span>
+                            <span class="tag">Supabase</span>
+                            <span class="tag">PostgreSQL</span>
+                            <span class="tag">RLS</span>
+                        </div>
+                    </article>
+
+                    <aside class="card">
+                        <h2>Project status</h2>
+                        <p>
+                            The core access and course-management foundation is implemented.
+                            Development continues toward quiz authoring, secure exam delivery,
+                            grading, results, analytics, and production deployment.
+                        </p>
+                    </aside>
+
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <div class="cta">
+                    <div>
+                        <h2>Explore the project</h2>
+                        <p>
+                            Replace the live-site placeholder below with your deployed application URL
+                            when the production site is ready.
+                        </p>
+                    </div>
+
+                    <!-- CHANGE THIS href TO YOUR DEPLOYED MAIN WEBSITE -->
+                    <a class="btn btn-primary" href="https://YOUR-LIVE-SITE-URL.com" target="_blank" rel="noreferrer">
+                        Open Main Website
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        ACADEMIC EVALUATION SYSTEM • Built by Yonan
+    </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Resume — Yonatan Mohammed, Software Engineer & Security Analyst.">
+    <title>Yonatan Mohammed — Resume</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #1a1a2e;
+            background: #f5f5fa;
+            line-height: 1.55;
+            padding: 24px 16px 48px;
+        }
+        .toolbar {
+            max-width: 820px;
+            margin: 0 auto 16px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .toolbar a, .toolbar button {
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 10px 18px;
+            border-radius: 8px;
+            border: 2px solid #4A3AFF;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .toolbar a {
+            background: transparent;
+            color: #4A3AFF;
+        }
+        .toolbar button {
+            background: #4A3AFF;
+            color: #fff;
+        }
+        .page {
+            max-width: 820px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px 48px;
+            border-radius: 12px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+        }
+        h1 { font-size: 1.75rem; margin-bottom: 4px; }
+        .tagline { color: #4A3AFF; font-weight: 600; margin-bottom: 12px; }
+        .contact-line { font-size: 0.82rem; color: #555; margin-bottom: 24px; }
+        .contact-line a { color: #4A3AFF; }
+        h2 {
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #4A3AFF;
+            border-bottom: 2px solid #edeaff;
+            padding-bottom: 6px;
+            margin: 22px 0 12px;
+        }
+        p, li { font-size: 0.88rem; color: #444; }
+        ul { padding-left: 18px; margin-top: 8px; }
+        li { margin-bottom: 6px; }
+        .skills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+        .skills span {
+            font-size: 0.75rem;
+            background: #f0eeff;
+            color: #4A3AFF;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-weight: 600;
+        }
+        @media print {
+            body { background: #fff; padding: 0; }
+            .toolbar { display: none; }
+            .page { box-shadow: none; border-radius: 0; padding: 0; max-width: 100%; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="toolbar">
+        <a href="index.html">← Back to portfolio</a>
+        <button type="button" onclick="window.print()">Print / Save as PDF</button>
+    </div>
+    <main class="page">
+        <h1>Yonatan Mohammed</h1>
+        <p class="tagline">Software Engineer & Security Analyst</p>
+        <p class="contact-line">
+            Addis Ababa, Ethiopia ·
+            <a href="mailto:mdyonatan4@gmail.com">mdyonatan4@gmail.com</a> ·
+            <a href="tel:+251966063977">+251 966 063 977</a><br>
+            <a href="https://github.com/yonan-md">github.com/yonan-md</a> ·
+            <a href="https://www.linkedin.com/in/yonatan-md-ab3381255/">LinkedIn</a>
+        </p>
+
+        <h2>Summary</h2>
+        <p>Versatile IT professional focused on secure web development, vulnerability assessment, and system
+            maintenance. Builds reliable applications, analyzes systems for security risks, and applies a continuous
+            learning mindset to deliver practical solutions.</p>
+
+        <h2>Skills</h2>
+        <div class="skills">
+            <span>Python & Django</span>
+            <span>JavaScript / React</span>
+            <span>HTML / CSS</span>
+            <span>SQL & REST APIs</span>
+            <span>Penetration testing</span>
+            <span>Network security</span>
+            <span>System monitoring</span>
+            <span>Git & Linux</span>
+        </div>
+
+        <h2>Selected projects</h2>
+        <ul>
+            <li><strong>BTC Live Monitor Bot</strong> — Real-time Bitcoin tracking with Telegram alerts for thresholds
+                and volatility (Python, Binance API).</li>
+            <li><strong>Academic Evaluation System</strong> — Role-based academic platform with Supabase RLS, React,
+                TypeScript (in active development).</li>
+            <li><strong>Web pentest & vulnerability assessment</strong> — Security assessment project (in progress).
+            </li>
+        </ul>
+
+        <h2>Certifications</h2>
+        <ul>
+            <li>Project Certificate — MICROLINK INFORMATION TECHNOLOGY COLLEGE</li>
+        </ul>
+
+        <h2>Education & training</h2>
+        <p>Information technology and software/security-focused coursework and project-based training (Microlink IT
+            College and ongoing self-directed learning).</p>
+    </main>
+</body>
+
+</html>

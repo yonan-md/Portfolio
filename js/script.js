@@ -1,4 +1,30 @@
-// ===== Mobile Navigation Toggle =====
+// ===== Theme toggle (default: night mode) =====
+        const themeToggle = document.getElementById('themeToggle');
+        const THEME_KEY = 'portfolio-theme';
+
+        function applyTheme(isLight) {
+            document.documentElement.classList.toggle('light-mode', isLight);
+            if (themeToggle) {
+                themeToggle.setAttribute('aria-label', isLight ? 'Switch to night mode' : 'Switch to light mode');
+                themeToggle.setAttribute('title', isLight ? 'Night mode' : 'Light mode');
+            }
+        }
+
+        function isLightMode() {
+            return document.documentElement.classList.contains('light-mode');
+        }
+
+        themeToggle?.addEventListener('click', () => {
+            const nextLight = !isLightMode();
+            applyTheme(nextLight);
+            try {
+                localStorage.setItem(THEME_KEY, nextLight ? 'light' : 'dark');
+            } catch (e) { /* ignore */ }
+        });
+
+        applyTheme(isLightMode());
+
+        // ===== Mobile Navigation Toggle =====
         const hamburger = document.getElementById('navHamburger');
         const navLinks = document.getElementById('navLinks');
 
@@ -81,7 +107,13 @@
         const sections = document.querySelectorAll('section');
         const navAnchors = document.querySelectorAll('.nav-links a:not(.btn-lets-talk)');
 
+        const navbar = document.querySelector('.navbar');
+
         window.addEventListener('scroll', () => {
+            if (navbar) {
+                navbar.classList.toggle('navbar-scrolled', window.scrollY > 24);
+            }
+
             let current = '';
             sections.forEach(section => {
                 const sectionTop = section.offsetTop - 100;
@@ -96,4 +128,47 @@
                     a.classList.add('active');
                 }
             });
+        });
+
+        // ===== Certificate lightbox =====
+        const certLightbox = document.getElementById('certLightbox');
+        const certLightboxImg = document.getElementById('certLightboxImg');
+        const certLightboxTitle = document.getElementById('certLightboxTitle');
+        const certLightboxClose = document.getElementById('certLightboxClose');
+
+        function openCertLightbox(src, title) {
+            if (!certLightbox || !certLightboxImg || !certLightboxTitle) return;
+            certLightboxImg.src = src;
+            certLightboxImg.alt = title;
+            certLightboxTitle.textContent = title;
+            certLightbox.hidden = false;
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCertLightbox() {
+            if (!certLightbox || !certLightboxImg) return;
+            certLightbox.hidden = true;
+            certLightboxImg.src = '';
+            document.body.style.overflow = '';
+        }
+
+        document.querySelectorAll('.cert-open-lightbox').forEach(btn => {
+            btn.addEventListener('click', () => {
+                openCertLightbox(
+                    btn.getAttribute('data-cert-src'),
+                    btn.getAttribute('data-cert-title') || 'Certificate'
+                );
+            });
+        });
+
+        certLightboxClose?.addEventListener('click', closeCertLightbox);
+
+        certLightbox?.addEventListener('click', (e) => {
+            if (e.target === certLightbox) closeCertLightbox();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && certLightbox && !certLightbox.hidden) {
+                closeCertLightbox();
+            }
         });

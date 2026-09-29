@@ -43,13 +43,24 @@
             backdrop-filter: blur(10px);
             box-shadow: 0 1px 10px rgba(0,0,0,0.05);
             padding: 12px 0;
-            transition: box-shadow 0.3s ease;
+            transition: box-shadow 0.3s ease, padding 0.3s ease;
+        }
+
+        .navbar.navbar-scrolled {
+            box-shadow: 0 4px 24px rgba(26, 26, 46, 0.08);
+            padding: 10px 0;
         }
 
         .navbar .container {
             display: flex;
             align-items: center;
             justify-content: space-between;
+        }
+
+        .nav-top-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
         .nav-logo {
@@ -144,6 +155,60 @@
             background: #333;
             border-radius: 2px;
             transition: all 0.3s ease;
+        }
+
+        .theme-toggle {
+            width: 42px;
+            height: 42px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            border: 1px solid rgba(74, 58, 255, 0.35);
+            background: rgba(74, 58, 255, 0.12);
+            color: #7c6fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease, color 0.25s ease;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(74, 58, 255, 0.22);
+            border-color: #4A3AFF;
+            color: #a89fff;
+            transform: scale(1.06);
+        }
+
+        .theme-toggle:active {
+            transform: scale(0.96);
+        }
+
+        .theme-icon-light,
+        .theme-icon-dark {
+            pointer-events: none;
+        }
+
+        html:not(.light-mode) .theme-icon-light {
+            display: block;
+        }
+
+        html:not(.light-mode) .theme-icon-dark {
+            display: none;
+        }
+
+        html.light-mode .theme-icon-light {
+            display: none;
+        }
+
+        html.light-mode .theme-icon-dark {
+            display: block;
+        }
+
+        html.light-mode .theme-toggle {
+            background: #f0eeff;
+            border-color: #d8d2ff;
+            color: #4A3AFF;
         }
 
         /* ===== HERO SECTION ===== */
@@ -597,6 +662,16 @@
             margin-bottom: 50px;
         }
 
+        .section-eyebrow {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: #4A3AFF;
+            margin-bottom: 10px;
+        }
+
         .section-header h2 {
             font-size: 2.2rem;
             font-weight: 700;
@@ -797,6 +872,208 @@
              text-decoration: underline;
         }
 
+        /* ===== CERTIFICATIONS SECTION ===== */
+        .certifications {
+            padding: 80px 0 100px;
+            background: linear-gradient(180deg, #f9f9ff 0%, #fff 100%);
+        }
+
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+        }
+
+        .cert-card {
+            background: #fff;
+            border-radius: 18px;
+            overflow: hidden;
+            border: 1px solid #ececf4;
+            box-shadow: 0 4px 24px rgba(26, 26, 46, 0.06);
+            transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cert-card:not(.cert-card--placeholder):hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 48px rgba(74, 58, 255, 0.12);
+            border-color: rgba(74, 58, 255, 0.25);
+        }
+
+        .cert-card-media {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            border: none;
+            padding: 0;
+            background: #eef0f8;
+            cursor: pointer;
+            font: inherit;
+            text-align: left;
+        }
+
+        .cert-card-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+            background: #fff;
+            transition: transform 0.45s ease;
+        }
+
+        .cert-card:not(.cert-card--placeholder):hover .cert-card-media img {
+            transform: scale(1.02);
+        }
+
+        .cert-zoom-hint {
+            position: absolute;
+            inset: auto 12px 12px auto;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: rgba(26, 26, 46, 0.72);
+            color: #fff;
+            font-size: 0.72rem;
+            font-weight: 600;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .cert-card:not(.cert-card--placeholder):hover .cert-zoom-hint {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cert-card-body {
+            padding: 18px 20px 22px;
+            flex: 1;
+        }
+
+        .cert-card-body h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 8px;
+        }
+
+        .cert-card-body p {
+            font-size: 0.78rem;
+            color: #777;
+            line-height: 1.65;
+        }
+
+        .cert-institution {
+            font-weight: 700;
+            color: #4A3AFF;
+        }
+
+        .cert-card--placeholder {
+            border-style: dashed;
+            border-color: #c8c8dc;
+            background: rgba(255, 255, 255, 0.65);
+            box-shadow: none;
+        }
+
+        .cert-card--placeholder:hover {
+            transform: none;
+            border-color: #4A3AFF;
+        }
+
+        .cert-placeholder-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: #8a8aa3;
+            cursor: default;
+            background: repeating-linear-gradient(
+                -45deg,
+                #f4f4fa,
+                #f4f4fa 8px,
+                #ececf4 8px,
+                #ececf4 16px
+            );
+        }
+
+        .cert-placeholder-inner i {
+            font-size: 1.4rem;
+            color: #4A3AFF;
+            opacity: 0.85;
+        }
+
+        .cert-placeholder-inner span {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .cert-placeholder-inner small {
+            font-size: 0.72rem;
+            color: #999;
+        }
+
+        .cert-lightbox {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background: rgba(15, 15, 28, 0.88);
+            backdrop-filter: blur(6px);
+        }
+
+        .cert-lightbox[hidden] {
+            display: none !important;
+        }
+
+        .cert-lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.25s ease, transform 0.25s ease;
+        }
+
+        .cert-lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.22);
+            transform: scale(1.05);
+        }
+
+        .cert-lightbox-content {
+            max-width: min(920px, 100%);
+            margin: 0;
+        }
+
+        .cert-lightbox-content img {
+            width: 100%;
+            max-height: min(78vh, 720px);
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
+        }
+
+        .cert-lightbox-content figcaption {
+            margin-top: 14px;
+            text-align: center;
+            color: #e8e8f0;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
         /* ===== CONTACT SECTION ===== */
         .contact {
             padding: 60px 0 8px;
@@ -940,6 +1217,10 @@
             .portfolio-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+
+            .cert-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         @media (max-width: 768px) {
@@ -1024,6 +1305,12 @@
                 margin: 0 auto;
             }
 
+            .cert-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
             .contact-form {
                 grid-template-columns: 1fr;
             }
@@ -1054,4 +1341,201 @@
         }
         .nav-hamburger.active span:nth-child(3) {
             transform: rotate(-45deg) translate(5px, -6px);
+        }
+
+        /* ===== NIGHT MODE (default) ===== */
+        html:not(.light-mode) body {
+            background: #0f1117;
+            color: #e4e6ed;
+        }
+
+        html:not(.light-mode) .navbar {
+            background: rgba(15, 17, 23, 0.96);
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06);
+        }
+
+        html:not(.light-mode) .navbar.navbar-scrolled {
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+        }
+
+        html:not(.light-mode) .nav-links a {
+            color: #c8cad4;
+        }
+
+        html:not(.light-mode) .nav-links a:hover,
+        html:not(.light-mode) .nav-links a.active {
+            color: #a89fff;
+        }
+
+        html:not(.light-mode) .nav-hamburger span {
+            background: #e4e6ed;
+        }
+
+        html:not(.light-mode) .hero {
+            background: linear-gradient(135deg, #12141c 0%, #161a28 50%, #14182a 100%);
+        }
+
+        html:not(.light-mode) .hero-content .greeting {
+            color: #e4e6ed;
+        }
+
+        html:not(.light-mode) .hero-content h1 {
+            color: #f2f3f8;
+        }
+
+        html:not(.light-mode) .hero-content p {
+            color: #a0a4b8;
+        }
+
+        html:not(.light-mode) .review-badge {
+            background: #1e2230;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+        }
+
+        html:not(.light-mode) .review-badge .review-text {
+            color: #e4e6ed;
+        }
+
+        html:not(.light-mode) .about {
+            background: #0f1117;
+        }
+
+        html:not(.light-mode) .about-content h2,
+        html:not(.light-mode) .section-header h2 {
+            color: #f2f3f8;
+        }
+
+        html:not(.light-mode) .about-content .about-subtitle,
+        html:not(.light-mode) .section-header p {
+            color: #9499ad;
+        }
+
+        html:not(.light-mode) .skill-bar .skill-label {
+            color: #d8dae4;
+        }
+
+        html:not(.light-mode) .skill-track {
+            background: #2a2f3d;
+        }
+
+        html:not(.light-mode) .skill-fill::after {
+            background: #1e2230;
+        }
+
+        html:not(.light-mode) .services {
+            background: #12141c;
+        }
+
+        html:not(.light-mode) .service-card {
+            background: #1a1d28;
+            border-color: #2e3344;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        html:not(.light-mode) .service-card h3 {
+            color: #f0f1f6;
+        }
+
+        html:not(.light-mode) .service-card p {
+            color: #9499ad;
+        }
+
+        html:not(.light-mode) .service-card .service-icon {
+            background: rgba(74, 58, 255, 0.18);
+        }
+
+        html:not(.light-mode) .portfolio {
+            background: #0f1117;
+        }
+
+        html:not(.light-mode) .filter-btn {
+            border-color: #3a4052;
+            color: #b8bcc8;
+        }
+
+        html:not(.light-mode) .filter-btn:hover {
+            border-color: #7c6fff;
+            color: #c4b8ff;
+        }
+
+        html:not(.light-mode) .portfolio-card {
+            background: #1a1d28;
+            border-color: #2e3344;
+        }
+
+        html:not(.light-mode) .portfolio-card-image {
+            background: #252a38;
+        }
+
+        html:not(.light-mode) .portfolio-card-content h3 {
+            color: #eceef4;
+        }
+
+        html:not(.light-mode) .portfolio-card-tag {
+            background: rgba(74, 58, 255, 0.22);
+            color: #b8adff;
+        }
+
+        html:not(.light-mode) .portfolio-card-content .see-more {
+            color: #8b9cff;
+        }
+
+        html:not(.light-mode) .certifications {
+            background: linear-gradient(180deg, #12141c 0%, #0f1117 100%);
+        }
+
+        html:not(.light-mode) .cert-card {
+            background: #1a1d28;
+            border-color: #2e3344;
+        }
+
+        html:not(.light-mode) .cert-card-body h3 {
+            color: #f0f1f6;
+        }
+
+        html:not(.light-mode) .cert-card-body p {
+            color: #9499ad;
+        }
+
+        html:not(.light-mode) .cert-card-media {
+            background: #252a38;
+        }
+
+        html:not(.light-mode) .cert-card-media img {
+            background: #1e2230;
+        }
+
+        html:not(.light-mode) .cert-card--placeholder {
+            background: rgba(26, 29, 40, 0.65);
+            border-color: #3d4458;
+        }
+
+        html:not(.light-mode) .cert-placeholder-inner {
+            color: #9499ad;
+            background: repeating-linear-gradient(
+                -45deg,
+                #1e2230,
+                #1e2230 8px,
+                #252a38 8px,
+                #252a38 16px
+            );
+        }
+
+        html:not(.light-mode) .cert-placeholder-inner span {
+            color: #c8cad4;
+        }
+
+        html:not(.light-mode) .contact {
+            background: #12141c;
+        }
+
+        html:not(.light-mode) ::-webkit-scrollbar-track {
+            background: #1a1d28;
+        }
+
+        @media (max-width: 768px) {
+            html:not(.light-mode) .nav-links {
+                background: #1a1d28;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+            }
         }

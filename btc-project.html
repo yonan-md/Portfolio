@@ -1,86 +1,856 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BTC Live Monitor Bot</title>
+  <title>BTC Live Monitor Bot - Modern Showcase</title>
+
+  <!-- Tailwind CSS Framework -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Chart.js for Interactive Price Visualization -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              gold: '#F7931A', // BTC Gold
+              blue: '#00F0FF', // Cyber Cyan
+              dark: '#0B0E14',
+              card: '#131822',
+              cardBorder: '#20293A',
+              accent: '#3B82F6'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
   <style>
-    /* Reset some defaults */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body { 
-      font-family: Arial, Helvetica, sans-serif; 
-      background-color: #f9f9f9; 
-      color: #333; 
-      line-height: 1.6;
-      padding: 20px; 
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
     }
 
-    a { color: #4d0202; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
-    h1 { color: #23058d; margin-bottom: 15px; }
-    h2 { color: #444; margin-top: 25px; margin-bottom: 10px; }
-
-    p { margin-bottom: 15px; }
-    ul { margin-left: 20px; margin-bottom: 15px; }
-
-    .images { 
-      display: flex; 
-      flex-wrap: wrap; 
-      gap: 15px; 
-      margin-bottom: 20px;
+    ::-webkit-scrollbar-track {
+      background: #0b0e14;
     }
 
-    .images img { 
-      max-width: 100%; 
-      width: 300px; 
-      border: 1px solid #ccc; 
-      border-radius: 8px; 
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1); 
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 4px;
     }
 
-    .links { margin-top: 20px; }
-    .links a { font-weight: bold; }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #334155;
+    }
+
+    /* Glassmorphism Backgrounds */
+    .glass-panel {
+      background: rgba(19, 24, 34, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .glass-card:hover {
+      border-color: rgba(247, 147, 26, 0.3);
+      box-shadow: 0 10px 30px -10px rgba(247, 147, 26, 0.15);
+    }
+
+    /* Glow Effects */
+    .glow-gold {
+      box-shadow: 0 0 25px -5px rgba(247, 147, 26, 0.3);
+    }
+
+    .glow-cyan {
+      box-shadow: 0 0 25px -5px rgba(0, 240, 255, 0.25);
+    }
+
+    /* Pulse animation for live status indicator */
+    @keyframes pulse-ring {
+      0% {
+        transform: scale(0.95);
+        opacity: 0.8;
+      }
+
+      50% {
+        transform: scale(1.2);
+        opacity: 0.3;
+      }
+
+      100% {
+        transform: scale(0.95);
+        opacity: 0.8;
+      }
+    }
+
+    .pulse-indicator {
+      animation: pulse-ring 2s infinite ease-in-out;
+    }
   </style>
 </head>
-<body>
 
-  <h1>BTC Live Monitor Bot</h1>
+<body
+  class="bg-[#080B10] text-slate-200 font-sans min-h-screen flex flex-col selection:bg-amber-500/30 selection:text-amber-300">
 
-  <p>
-    This project monitors live BTC prices using Python and Binance API. It sends Telegram alerts when price crosses thresholds, detects big moves, and logs all price data. A dashboard chart visualizes price trends over time.
-  </p>
+  <!-- Top Navigation Header -->
+  <header class="sticky top-0 z-40 w-full glass-panel border-b border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
 
-  <h2>Features</h2>
-  <ul>
-    <li>Real-time BTC price tracking</li>
-    <li>Low & High threshold alerts</li>
-    <li>Big price movement detection</li>
-    <li>Hourly volatility monitoring</li>
-    <li>CSV logging and chart visualization</li>
-  </ul>
+      <!-- Brand Logo / Title -->
+      <div class="flex items-center space-x-3">
+        <div
+          class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-yellow-300 flex items-center justify-center text-slate-950 font-bold text-xl shadow-lg shadow-amber-500/20">
+          <i class="fa-bold fa-bitcoin"></i>
+        </div>
+        <div>
+          <h1 class="font-bold text-lg sm:text-xl text-white tracking-tight flex items-center gap-2">
+            BTC Live Monitor
+            <span
+              class="text-xs font-mono font-normal bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2 py-0.5 rounded-full">v2.4
+              Bot</span>
+          </h1>
+          <p class="text-xs text-slate-400 hidden sm:block">Automated Crypto Alert & Volatility Tracker</p>
+        </div>
+      </div>
 
-  <h2>Telegram Alerts</h2>
-  <div class="images">
-    <img src="assets/images/Screenshot 2026-04-02 220058.png" alt="Low Threshold Alert">
-    <img src="assets/images/Screenshot 2026-04-02 220120.png" alt="High Threshold Alert">
-    <img src="assets/images/Screenshot 2026-04-02 151703.png" alt="Big Move Alert">
+      <!-- Quick Action Navigation -->
+      <div class="flex items-center gap-3 sm:gap-4">
+        <a href="index.html"
+          class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white bg-slate-800/60 hover:bg-slate-700/60 border border-slate-700/50 transition duration-200">
+          <i class="fa-solid fa-arrow-left text-xs"></i>
+          <span class="hidden xs:inline">Portfolio</span>
+        </a>
+        <a href="https://github.com/Yonan-md/live-monitor" target="_blank" rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-slate-900 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 shadow-md shadow-amber-500/20 transition duration-200">
+          <i class="fa-brands fa-github text-base"></i>
+          <span>GitHub</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero & Live Ticker Showcase Section -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+
+    <!-- Hero Header -->
+    <section class="text-center max-w-3xl mx-auto pt-4 space-y-4">
+      <div
+        class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-medium bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+        <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+        Powered by Python & Binance Websockets
+      </div>
+
+      <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
+        Real-Time BTC Alerting & <span
+          class="bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-300 bg-clip-text text-transparent">Volatility
+          Bot</span>
+      </h2>
+
+      <p class="text-slate-400 text-base sm:text-lg leading-relaxed">
+        A high-performance Python bot actively monitoring Bitcoin price streams. It fires instant Telegram alerts for
+        low/high threshold breaks, abnormal surge spikes, and logs historical price data for interactive analysis.
+      </p>
+
+      <!-- Tech Stack Badges -->
+      <div class="flex flex-wrap justify-center items-center gap-2 pt-2">
+        <span
+          class="px-3 py-1 rounded-md text-xs font-mono bg-slate-800/80 text-slate-300 border border-slate-700/60"><i
+            class="fa-brands fa-python text-blue-400 mr-1.5"></i>Python 3.10</span>
+        <span
+          class="px-3 py-1 rounded-md text-xs font-mono bg-slate-800/80 text-slate-300 border border-slate-700/60"><i
+            class="fa-solid fa-server text-amber-400 mr-1.5"></i>Binance REST/WS API</span>
+        <span
+          class="px-3 py-1 rounded-md text-xs font-mono bg-slate-800/80 text-slate-300 border border-slate-700/60"><i
+            class="fa-brands fa-telegram text-sky-400 mr-1.5"></i>Telegram Bot API</span>
+        <span
+          class="px-3 py-1 rounded-md text-xs font-mono bg-slate-800/80 text-slate-300 border border-slate-700/60"><i
+            class="fa-solid fa-chart-line text-emerald-400 mr-1.5"></i>Matplotlib / Charting</span>
+      </div>
+    </section>
+
+    <!-- Interactive Live Ticker Simulator Box -->
+    <section class="glass-panel rounded-2xl p-6 sm:p-8 border border-slate-800 relative overflow-hidden">
+      <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-500 via-cyan-500 to-amber-500"></div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+        <!-- Live Ticker Stats -->
+        <div
+          class="space-y-6 lg:col-span-1 border-b lg:border-b-0 lg:border-r border-slate-800/80 pb-6 lg:pb-0 lg:pr-6">
+          <div class="flex items-center justify-between">
+            <span class="text-xs uppercase font-mono tracking-wider text-slate-400">Pair: BTC / USDT</span>
+            <span
+              class="inline-flex items-center gap-1.5 text-xs font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 rounded-full">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 pulse-indicator"></span>
+              BOT ACTIVE
+            </span>
+          </div>
+
+          <div>
+            <div class="text-xs text-slate-400 font-mono mb-1">Simulated Live Market Price</div>
+            <div
+              class="text-4xl sm:text-5xl font-extrabold font-mono text-white tracking-tight flex items-baseline gap-3"
+              id="liveBtcPrice">
+              $68,450.00
+            </div>
+            <div class="flex items-center gap-2 mt-2 text-sm font-mono" id="priceChangeBadge">
+              <span class="text-emerald-400 flex items-center gap-1 font-semibold">
+                <i class="fa-solid fa-caret-up"></i> +$245.50 (+0.36%)
+              </span>
+              <span class="text-slate-500 text-xs">24h Vol: $28.4B</span>
+            </div>
+          </div>
+
+          <!-- Alert Threshold Indicators -->
+          <div class="space-y-2 pt-2 border-t border-slate-800/60">
+            <div class="text-xs font-mono text-slate-400 uppercase tracking-wider">Bot Alert Controls</div>
+            <div class="grid grid-cols-2 gap-2 text-xs font-mono">
+              <div class="p-2.5 rounded-lg bg-slate-900/60 border border-slate-800">
+                <div class="text-slate-400 text-[10px]">LOW TRIGGER</div>
+                <div class="text-rose-400 font-bold">$67,500.00</div>
+              </div>
+              <div class="p-2.5 rounded-lg bg-slate-900/60 border border-slate-800">
+                <div class="text-slate-400 text-[10px]">HIGH TRIGGER</div>
+                <div class="text-emerald-400 font-bold">$69,500.00</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Test Triggers -->
+          <div class="pt-2">
+            <div class="text-xs font-mono text-slate-400 mb-2">Simulate Alert Triggers:</div>
+            <div class="flex flex-wrap gap-2">
+              <button onclick="triggerSimulatedSpike('low')"
+                class="px-3 py-1.5 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 rounded-lg text-xs font-mono transition">
+                ⚡ Low Spike
+              </button>
+              <button onclick="triggerSimulatedSpike('high')"
+                class="px-3 py-1.5 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-lg text-xs font-mono transition">
+                🚀 High Surge
+              </button>
+              <button onclick="resetSimulation()"
+                class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 rounded-lg text-xs font-mono transition">
+                🔄 Reset
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Simulated Chart -->
+        <div class="lg:col-span-2 space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-chart-line text-amber-400"></i>
+              <h3 class="text-sm font-semibold text-white">Live Price Monitoring Stream & Alert Thresholds</h3>
+            </div>
+            <span class="text-xs font-mono text-slate-400">Real-time chart simulation</span>
+          </div>
+
+          <div class="relative w-full h-[260px] sm:h-[300px] rounded-xl bg-slate-950/60 p-4 border border-slate-800/80">
+            <canvas id="btcLiveChart"></canvas>
+          </div>
+
+          <!-- Alert Logs Stream -->
+          <div id="simLogBox"
+            class="p-3 rounded-lg bg-slate-950/80 border border-slate-800 font-mono text-xs text-slate-300 h-16 overflow-y-auto flex items-center">
+            <div class="flex items-center gap-2 text-cyan-400">
+              <i class="fa-solid fa-terminal text-xs"></i>
+              <span>Bot initialized. Monitoring ticker stream... All signals normal.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bot Capabilities / Features Grid -->
+    <section class="space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-slate-800 pb-4">
+        <div>
+          <h2 class="text-2xl font-bold text-white tracking-tight">Core Bot Functionality</h2>
+          <p class="text-slate-400 text-sm">Key features built into the automated Python monitoring engine</p>
+        </div>
+        <span
+          class="text-xs font-mono text-amber-400/90 bg-amber-400/10 px-3 py-1 rounded-full border border-amber-400/20 w-fit">
+          <i class="fa-solid fa-bolt mr-1"></i> Asynchronous Execution
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+        <!-- Feature 1 -->
+        <div class="glass-card rounded-xl p-6 space-y-3 transition-all duration-300">
+          <div
+            class="w-12 h-12 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center text-xl">
+            <i class="fa-solid fa-satellite-dish"></i>
+          </div>
+          <h3 class="text-lg font-semibold text-white">Real-Time Price Tracking</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            Continuously polls the Binance REST API or WebSocket feed to monitor BTC spot prices with sub-second latency
+            and minimal memory footprint.
+          </p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="glass-card rounded-xl p-6 space-y-3 transition-all duration-300">
+          <div
+            class="w-12 h-12 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400 flex items-center justify-center text-xl">
+            <i class="fa-solid fa-bell-concierge"></i>
+          </div>
+          <h3 class="text-lg font-semibold text-white">Threshold Breach Alerts</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            Triggers instantaneous Telegram messages whenever prices drop below predefined floor limits or break above
+            upper ceiling targets.
+          </p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="glass-card rounded-xl p-6 space-y-3 transition-all duration-300">
+          <div
+            class="w-12 h-12 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center text-xl">
+            <i class="fa-solid fa-arrow-trend-up"></i>
+          </div>
+          <h3 class="text-lg font-semibold text-white">Big Movement Detection</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            Analyzes candle velocity to identify rapid price percentage spikes or sudden market dumps within short
+            timeframe windows.
+          </p>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="glass-card rounded-xl p-6 space-y-3 transition-all duration-300">
+          <div
+            class="w-12 h-12 rounded-lg bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center text-xl">
+            <i class="fa-solid fa-gauge-high"></i>
+          </div>
+          <h3 class="text-lg font-semibold text-white">Hourly Volatility Audits</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            Calculates rolling volatility standard deviations on an hourly cadence to keep traders informed during high
+            market turbulence.
+          </p>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="glass-card rounded-xl p-6 space-y-3 transition-all duration-300">
+          <div
+            class="w-12 h-12 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl">
+            <i class="fa-solid fa-file-csv"></i>
+          </div>
+          <h3 class="text-lg font-semibold text-white">CSV Data Logging</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            Automatically logs timestamped price updates to local CSV files for persistent record-keeping and
+            backtesting analysis.
+          </p>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="glass-card rounded-xl p-6 space-y-3 transition-all duration-300">
+          <div
+            class="w-12 h-12 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center text-xl">
+            <i class="fa-solid fa-chart-area"></i>
+          </div>
+          <h3 class="text-lg font-semibold text-white">Dashboard Chart Generation</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            Generates high-resolution graphical trend charts using Matplotlib to summarize intraday trends directly
+            inside Telegram reports.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- System Architecture Section -->
+    <section class="glass-panel rounded-2xl p-6 sm:p-8 border border-slate-800 space-y-6">
+      <div class="border-b border-slate-800 pb-4">
+        <h2 class="text-2xl font-bold text-white tracking-tight">System Data Flow</h2>
+        <p class="text-slate-400 text-sm">How market data flows from Binance exchange through Python processing to user
+          notifications</p>
+      </div>
+
+      <!-- Flow Architecture Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 relative">
+
+        <!-- Step 1 -->
+        <div class="p-5 rounded-xl bg-slate-900/80 border border-slate-800 relative flex flex-col justify-between">
+          <div class="space-y-2">
+            <div class="text-xs font-mono text-amber-400">01 / SOURCE</div>
+            <div class="font-bold text-white text-base flex items-center gap-2">
+              <i class="fa-solid fa-building-columns text-amber-400"></i> Binance API
+            </div>
+            <p class="text-xs text-slate-400">Streams live orderbook tickers and candle data directly from exchange
+              servers.</p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800 text-[11px] font-mono text-slate-500">REST & WS Endpoints
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="p-5 rounded-xl bg-slate-900/80 border border-slate-800 relative flex flex-col justify-between">
+          <div class="space-y-2">
+            <div class="text-xs font-mono text-cyan-400">02 / CORE ENGINE</div>
+            <div class="font-bold text-white text-base flex items-center gap-2">
+              <i class="fa-brands fa-python text-cyan-400"></i> Python Bot Engine
+            </div>
+            <p class="text-xs text-slate-400">Evaluates threshold rules, movement deltas, volatility, and writes CSV log
+              records.</p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800 text-[11px] font-mono text-slate-500">pandas + asyncio</div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="p-5 rounded-xl bg-slate-900/80 border border-slate-800 relative flex flex-col justify-between">
+          <div class="space-y-2">
+            <div class="text-xs font-mono text-blue-400">03 / CHARTING</div>
+            <div class="font-bold text-white text-base flex items-center gap-2">
+              <i class="fa-solid fa-chart-line text-blue-400"></i> Chart Renderer
+            </div>
+            <p class="text-xs text-slate-400">Plots styled intraday price trend charts and outputs high-res visual
+              assets.</p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800 text-[11px] font-mono text-slate-500">Matplotlib / Seaborn
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="p-5 rounded-xl bg-slate-900/80 border border-slate-800 relative flex flex-col justify-between">
+          <div class="space-y-2">
+            <div class="text-xs font-mono text-emerald-400">04 / DISPATCH</div>
+            <div class="font-bold text-white text-base flex items-center gap-2">
+              <i class="fa-brands fa-telegram text-emerald-400"></i> Telegram Bot
+            </div>
+            <p class="text-xs text-slate-400">Delivers instant rich push notifications with attached chart
+              visualizations to subscriber channels.</p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800 text-[11px] font-mono text-slate-500">Telegram Bot API</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Screenshot Gallery Section -->
+    <section class="space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-slate-800 pb-4">
+        <div>
+          <h2 class="text-2xl font-bold text-white tracking-tight">Bot Showcase & Screenshots</h2>
+          <p class="text-slate-400 text-sm">Actual screenshots of Telegram notifications and rendered price charts</p>
+        </div>
+        <span class="text-xs font-mono text-slate-400">Click any image to expand view</span>
+      </div>
+
+      <!-- Telegram Alert Screenshots Sub-Grid -->
+      <div class="space-y-3">
+        <h3 class="text-sm font-semibold text-slate-300 uppercase tracking-wider font-mono flex items-center gap-2">
+          <i class="fa-brands fa-telegram text-sky-400"></i> Telegram Alert Samples
+        </h3>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+          <!-- Image 1 -->
+          <div onclick="openLightbox('assets/images/Screenshot 2026-04-02 220058.png', 'Low Threshold Alert')"
+            class="group relative rounded-xl overflow-hidden glass-card border border-slate-800 cursor-pointer transition-all duration-300 hover:scale-[1.02]">
+            <div class="aspect-video bg-slate-900 overflow-hidden flex items-center justify-center p-2">
+              <img src="assets/images/Screenshot 2026-04-02 220058.png" alt="Low Threshold Alert"
+                class="max-h-full max-w-full object-contain rounded-md transition duration-300 group-hover:scale-105"
+                onerror="this.onerror=null; this.src='https://placehold.co/600x400/131822/F7931A?text=Low+Threshold+Alert+Screenshot';">
+            </div>
+            <div class="p-3 bg-slate-900/90 border-t border-slate-800/80 flex items-center justify-between">
+              <div>
+                <span class="text-xs font-semibold text-rose-400 block">Low Threshold Alert</span>
+                <span class="text-[11px] text-slate-400">Triggered when price drops below floor limit</span>
+              </div>
+              <i class="fa-solid fa-expand text-slate-400 group-hover:text-amber-400 text-xs"></i>
+            </div>
+          </div>
+
+          <!-- Image 2 -->
+          <div onclick="openLightbox('assets/images/Screenshot 2026-04-02 220120.png', 'High Threshold Alert')"
+            class="group relative rounded-xl overflow-hidden glass-card border border-slate-800 cursor-pointer transition-all duration-300 hover:scale-[1.02]">
+            <div class="aspect-video bg-slate-900 overflow-hidden flex items-center justify-center p-2">
+              <img src="assets/images/Screenshot 2026-04-02 220120.png" alt="High Threshold Alert"
+                class="max-h-full max-w-full object-contain rounded-md transition duration-300 group-hover:scale-105"
+                onerror="this.onerror=null; this.src='https://placehold.co/600x400/131822/00F0FF?text=High+Threshold+Alert+Screenshot';">
+            </div>
+            <div class="p-3 bg-slate-900/90 border-t border-slate-800/80 flex items-center justify-between">
+              <div>
+                <span class="text-xs font-semibold text-emerald-400 block">High Threshold Alert</span>
+                <span class="text-[11px] text-slate-400">Triggered when price breaks above ceiling target</span>
+              </div>
+              <i class="fa-solid fa-expand text-slate-400 group-hover:text-amber-400 text-xs"></i>
+            </div>
+          </div>
+
+          <!-- Image 3 -->
+          <div onclick="openLightbox('assets/images/Screenshot 2026-04-02 151703.png', 'Big Move Alert')"
+            class="group relative rounded-xl overflow-hidden glass-card border border-slate-800 cursor-pointer transition-all duration-300 hover:scale-[1.02]">
+            <div class="aspect-video bg-slate-900 overflow-hidden flex items-center justify-center p-2">
+              <img src="assets/images/Screenshot 2026-04-02 151703.png" alt="Big Move Alert"
+                class="max-h-full max-w-full object-contain rounded-md transition duration-300 group-hover:scale-105"
+                onerror="this.onerror=null; this.src='https://placehold.co/600x400/131822/3B82F6?text=Big+Move+Alert+Screenshot';">
+            </div>
+            <div class="p-3 bg-slate-900/90 border-t border-slate-800/80 flex items-center justify-between">
+              <div>
+                <span class="text-xs font-semibold text-amber-400 block">Big Movement Spike Alert</span>
+                <span class="text-[11px] text-slate-400">Detects rapid % price momentum changes</span>
+              </div>
+              <i class="fa-solid fa-expand text-slate-400 group-hover:text-amber-400 text-xs"></i>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Dashboard Chart Screenshot Sub-Grid -->
+      <div class="space-y-3 pt-4">
+        <h3 class="text-sm font-semibold text-slate-300 uppercase tracking-wider font-mono flex items-center gap-2">
+          <i class="fa-solid fa-chart-area text-amber-400"></i> Rendered Analytics Chart
+        </h3>
+
+        <div onclick="openLightbox('assets/images/btc_chart.png', 'Generated BTC Dashboard Chart')"
+          class="group relative rounded-xl overflow-hidden glass-panel border border-slate-800 cursor-pointer transition-all duration-300 hover:border-amber-500/40">
+          <div class="p-4 bg-slate-900/60 overflow-hidden flex items-center justify-center min-h-[220px]">
+            <img src="assets/images/btc_chart.png" alt="BTC Price Chart"
+              class="max-h-[380px] w-auto object-contain rounded-lg shadow-xl transition duration-300 group-hover:scale-[1.01]"
+              onerror="this.onerror=null; this.src='https://placehold.co/900x450/131822/F7931A?text=Generated+BTC+Dashboard+Chart';">
+          </div>
+          <div class="p-4 bg-slate-900 border-t border-slate-800 flex items-center justify-between">
+            <div>
+              <span class="text-sm font-semibold text-white block">Bot Generated Visual Dashboard Chart</span>
+              <span class="text-xs text-slate-400">Exported directly via Python plotting library and attached to daily
+                digests</span>
+            </div>
+            <div
+              class="flex items-center gap-2 text-xs font-mono text-amber-400 bg-amber-500/10 px-3 py-1.5 rounded-lg border border-amber-500/20">
+              <i class="fa-solid fa-magnifying-glass-plus"></i> View Full Chart
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom Project Action Buttons -->
+    <section
+      class="pt-6 pb-12 text-center flex flex-col sm:flex-row items-center justify-center gap-4 border-t border-slate-800">
+      <a href="https://github.com/Yonan-md/live-monitor" target="_blank" rel="noopener noreferrer"
+        class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-bold text-slate-950 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 shadow-lg shadow-amber-500/20 transition duration-200">
+        <i class="fa-brands fa-github text-lg"></i>
+        <span>Explore Code on GitHub</span>
+      </a>
+
+      <a href="index.html"
+        class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-slate-300 hover:text-white bg-slate-900 hover:bg-slate-800 border border-slate-800 transition duration-200">
+        <i class="fa-solid fa-arrow-left text-sm"></i>
+        <span>Back to Developer Portfolio</span>
+      </a>
+    </section>
+
+  </main>
+
+  <!-- Modal Lightbox for Image Inspection -->
+  <div id="lightboxModal"
+    class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-md flex items-center justify-center p-4 sm:p-8"
+    onclick="closeLightbox()">
+    <div class="relative max-w-5xl w-full max-h-full flex flex-col items-center" onclick="event.stopPropagation()">
+      <!-- Close Button -->
+      <button onclick="closeLightbox()"
+        class="absolute -top-10 right-0 text-slate-400 hover:text-white text-2xl font-bold transition">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <!-- Lightbox Image Container -->
+      <div
+        class="bg-slate-900 rounded-2xl border border-slate-800 p-2 overflow-hidden shadow-2xl max-h-[80vh] flex items-center justify-center">
+        <img id="lightboxImage" src="" alt="Enlarged View" class="max-h-[75vh] w-auto object-contain rounded-lg">
+      </div>
+
+      <!-- Caption -->
+      <div class="mt-4 text-center">
+        <h4 id="lightboxTitle" class="text-lg font-bold text-white">Image Preview</h4>
+        <p class="text-xs text-slate-400 font-mono mt-1">BTC Live Monitor Bot Asset</p>
+      </div>
+    </div>
   </div>
 
-  <h2>Dashboard Chart</h2>
-  <div class="images">
-    <img src="assets/images/btc_chart.png" alt="BTC Price Chart">
-  </div>
+  <!-- Footer -->
+  <footer class="w-full border-t border-slate-800/80 bg-slate-950 py-6">
+    <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500 font-mono space-y-2">
+      <p>BTC Live Monitor Bot Showcase &bull; Designed with Tailored Dark Aesthetic</p>
+      <p>&copy; 2026 Yonan-md. All rights reserved.</p>
+    </div>
+  </footer>
 
-  <div class="links">
-    <p>
-      <a href="https://github.com/Yonan-md/live-monitor" target="_blank">View on GitHub</a>
-    </p>
-    <p>
-      <a href="index.html">&larr; Back to Portfolio</a>
-    </p>
-  </div>
+  <script>
+    // Global simulation state
+    let btcChart = null;
+    let basePrice = 68450.00;
+    let currentPrice = basePrice;
+    let labels = [];
+    let priceData = [];
+    let lowThreshold = 67500;
+    let highThreshold = 69500;
 
+    // Initialize Page logic on load
+    window.addEventListener('DOMContentLoaded', () => {
+      initChart();
+      startPriceSimulation();
+    });
+
+    // Chart initialization with Chart.js
+    function initChart() {
+      const ctx = document.getElementById('btcLiveChart').getContext('2d');
+
+      // Generate initial 20 historical points
+      const now = new Date();
+      for (let i = 19; i >= 0; i--) {
+        const timeStr = new Date(now.getTime() - i * 3000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        labels.push(timeStr);
+        // smooth random walk
+        let variation = (Math.random() - 0.48) * 80;
+        basePrice += variation;
+        priceData.push(parseFloat(basePrice.toFixed(2)));
+      }
+      currentPrice = priceData[priceData.length - 1];
+
+      // Custom Gradient Background for Line Chart
+      const gradient = ctx.createLinearGradient(0, 0, 0, 260);
+      gradient.addColorStop(0, 'rgba(247, 147, 26, 0.35)');
+      gradient.addColorStop(1, 'rgba(247, 147, 26, 0.0)');
+
+      btcChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'BTC/USDT',
+            data: priceData,
+            borderColor: '#F7931A',
+            borderWidth: 2.5,
+            fill: true,
+            backgroundColor: gradient,
+            tension: 0.3,
+            pointRadius: 2,
+            pointHoverRadius: 6,
+            pointBackgroundColor: '#F7931A'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: { duration: 400 },
+          scales: {
+            x: {
+              grid: { color: 'rgba(255, 255, 255, 0.05)' },
+              ticks: { color: '#64748B', font: { family: 'JetBrains Mono', size: 10 }, maxTicksLimit: 6 }
+            },
+            y: {
+              grid: { color: 'rgba(255, 255, 255, 0.05)' },
+              ticks: {
+                color: '#64748B',
+                font: { family: 'JetBrains Mono', size: 10 },
+                callback: function (val) { return '$' + val.toLocaleString(); }
+              }
+            }
+          },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: '#0F172A',
+              titleColor: '#F8FAFC',
+              bodyColor: '#F7931A',
+              borderColor: '#334155',
+              borderWidth: 1,
+              padding: 10,
+              displayColors: false,
+              callbacks: {
+                label: function (ctx) { return 'Price: $' + ctx.parsed.y.toLocaleString(); }
+              }
+            }
+          }
+        }
+      });
+
+      updateDisplayValues(currentPrice, 0);
+    }
+
+    // Continuous Real-Time Simulation Interval
+    function startPriceSimulation() {
+      setInterval(() => {
+        let delta = (Math.random() - 0.49) * 45;
+        currentPrice += delta;
+        currentPrice = Math.max(65000, Math.min(72000, currentPrice));
+
+        pushChartPoint(currentPrice, delta);
+        checkAlertThresholds(currentPrice, delta);
+      }, 3000);
+    }
+
+    // Push new point to chart
+    function pushChartPoint(price, delta) {
+      if (!btcChart) return;
+
+      const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
+      btcChart.data.labels.push(timeStr);
+      btcChart.data.datasets[0].data.push(parseFloat(price.toFixed(2)));
+
+      if (btcChart.data.labels.length > 25) {
+        btcChart.data.labels.shift();
+        btcChart.data.datasets[0].data.shift();
+      }
+
+      btcChart.update();
+      updateDisplayValues(price, delta);
+    }
+
+    // Update Live Ticker Labels
+    function updateDisplayValues(price, delta) {
+      const priceEl = document.getElementById('liveBtcPrice');
+      const badgeEl = document.getElementById('priceChangeBadge');
+
+      if (priceEl) {
+        priceEl.innerText = '$' + price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      }
+
+      if (badgeEl) {
+        const isUp = delta >= 0;
+        const colorClass = isUp ? 'text-emerald-400' : 'text-rose-400';
+        const iconClass = isUp ? 'fa-caret-up' : 'fa-caret-down';
+        const sign = isUp ? '+' : '';
+
+        badgeEl.innerHTML = `
+          <span class="${colorClass} flex items-center gap-1 font-semibold">
+            <i class="fa-solid ${iconClass}"></i> ${sign}$${Math.abs(delta).toFixed(2)}
+          </span>
+          <span class="text-slate-500 text-xs">24h Vol: $28.4B</span>
+        `;
+      }
+    }
+
+    // Evaluate simulated thresholds & write to console log UI
+    function checkAlertThresholds(price, delta) {
+      const logBox = document.getElementById('simLogBox');
+      if (!logBox) return;
+
+      const time = new Date().toLocaleTimeString();
+
+      if (price <= lowThreshold) {
+        logBox.innerHTML = `
+          <div class="flex items-center gap-2 text-rose-400 font-bold">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <span>[${time}] TELEGRAM ALERT SENT: Price ($${price.toFixed(2)}) dropped BELOW floor threshold ($${lowThreshold.toLocaleString()})!</span>
+          </div>
+        `;
+      } else if (price >= highThreshold) {
+        logBox.innerHTML = `
+          <div class="flex items-center gap-2 text-emerald-400 font-bold">
+            <i class="fa-solid fa-rocket"></i>
+            <span>[${time}] TELEGRAM ALERT SENT: Price ($${price.toFixed(2)}) BROKE ABOVE ceiling target ($${highThreshold.toLocaleString()})!</span>
+          </div>
+        `;
+      } else if (Math.abs(delta) > 150) {
+        logBox.innerHTML = `
+          <div class="flex items-center gap-2 text-amber-400 font-bold">
+            <i class="fa-solid fa-bolt"></i>
+            <span>[${time}] TELEGRAM ALERT SENT: Rapid movement velocity detected (${delta > 0 ? '+' : ''}$${delta.toFixed(2)})!</span>
+          </div>
+        `;
+      }
+    }
+
+    // Trigger explicit testing spikes
+    function triggerSimulatedSpike(type) {
+      const logBox = document.getElementById('simLogBox');
+      if (type === 'low') {
+        currentPrice = 67200.00;
+        pushChartPoint(currentPrice, -1250);
+        if (logBox) {
+          logBox.innerHTML = `
+            <div class="flex items-center gap-2 text-rose-400 font-bold animate-pulse">
+              <i class="fa-brands fa-telegram"></i>
+              <span>[SIMULATION] Low alert fired -> Telegram payload queued for $67,200.00</span>
+            </div>
+          `;
+        }
+      } else if (type === 'high') {
+        currentPrice = 69850.00;
+        pushChartPoint(currentPrice, 1400);
+        if (logBox) {
+          logBox.innerHTML = `
+            <div class="flex items-center gap-2 text-emerald-400 font-bold animate-pulse">
+              <i class="fa-brands fa-telegram"></i>
+              <span>[SIMULATION] High surge alert fired -> Telegram payload queued for $69,850.00</span>
+            </div>
+          `;
+        }
+      }
+    }
+
+    function resetSimulation() {
+      currentPrice = 68450.00;
+      pushChartPoint(currentPrice, 0);
+      const logBox = document.getElementById('simLogBox');
+      if (logBox) {
+        logBox.innerHTML = `
+          <div class="flex items-center gap-2 text-cyan-400">
+            <i class="fa-solid fa-terminal text-xs"></i>
+            <span>Bot price stream reset to base $68,450.00. Monitoring active...</span>
+          </div>
+        `;
+      }
+    }
+
+    // Modal Lightbox Functions
+    function openLightbox(imgSrc, title) {
+      const modal = document.getElementById('lightboxModal');
+      const img = document.getElementById('lightboxImage');
+      const titleEl = document.getElementById('lightboxTitle');
+
+      if (modal && img && titleEl) {
+        img.src = imgSrc;
+        titleEl.innerText = title;
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeLightbox() {
+      const modal = document.getElementById('lightboxModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+    }
+
+    // Close lightbox on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  </script>
 </body>
+
 </html>
