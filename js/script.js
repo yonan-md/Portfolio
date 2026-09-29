@@ -138,8 +138,34 @@
 
         function openCertLightbox(src, title) {
             if (!certLightbox || !certLightboxImg || !certLightboxTitle) return;
-            certLightboxImg.src = src;
-            certLightboxImg.alt = title;
+
+            const isPdf = src.toLowerCase().endsWith('.pdf');
+            certLightboxImg.style.display = isPdf ? 'none' : 'block';
+
+            if (isPdf) {
+                const currentView = certLightbox.querySelector('.cert-lightbox-pdf');
+                if (!currentView) {
+                    const pdfFrame = document.createElement('iframe');
+                    pdfFrame.className = 'cert-lightbox-pdf';
+                    pdfFrame.setAttribute('title', title);
+                    pdfFrame.setAttribute('src', src);
+                    pdfFrame.setAttribute('loading', 'lazy');
+                    pdfFrame.setAttribute('allow', 'fullscreen');
+                    certLightbox.querySelector('.cert-lightbox-content').appendChild(pdfFrame);
+                } else {
+                    currentView.src = src;
+                    currentView.style.display = 'block';
+                }
+            } else {
+                const pdfView = certLightbox.querySelector('.cert-lightbox-pdf');
+                if (pdfView) {
+                    pdfView.style.display = 'none';
+                    pdfView.removeAttribute('src');
+                }
+                certLightboxImg.src = src;
+                certLightboxImg.alt = title;
+            }
+
             certLightboxTitle.textContent = title;
             certLightbox.hidden = false;
             document.body.style.overflow = 'hidden';
@@ -149,6 +175,12 @@
             if (!certLightbox || !certLightboxImg) return;
             certLightbox.hidden = true;
             certLightboxImg.src = '';
+            certLightboxImg.style.display = 'block';
+            const pdfView = certLightbox.querySelector('.cert-lightbox-pdf');
+            if (pdfView) {
+                pdfView.style.display = 'none';
+                pdfView.removeAttribute('src');
+            }
             document.body.style.overflow = '';
         }
 
